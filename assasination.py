@@ -1,4 +1,5 @@
 import bs
+import random
 
 def bsGetAPIVersion():
     return 4
@@ -26,6 +27,34 @@ class testGame(bs.TeamGameActivity):
     def supportsSessionType(cls, sessionType):
         return True if issubclass(sessionType, bs.CoopSession) else False
 
+    def __init__(self, settings):
+        bs.TeamGameActivity.__init__(self, settings) 
+
+        self._botSpawnTypes = [ bs.BomberBot, 
+                                bs.BomberBotPro, 
+                                bs.BomberBotProShielded,
+                                bs.ToughGuyBot,
+                                bs.ToughGuyBotPro,
+                                bs.ToughGuyBotProShielded,
+                                bs.ChickBot,
+                                bs.ChickBotPro,
+                                bs.ChickBotProShielded,
+                                bs.NinjaBot,
+                                bs.MelBot,
+                                bs.PirateBot]
+        self._botSpawnProbs = [ 0.2,
+                                0.225,
+                                0.25,
+                                0.45,
+                                0.5,
+                                0.55,
+                                0.6,
+                                0.7,
+                                0.75,
+                                0.85,
+                                0.95,
+                                1.0]
+
     def onBegin(self):
         bs.TeamGameActivity.onBegin(self)
 
@@ -33,17 +62,22 @@ class testGame(bs.TeamGameActivity):
 
         self._bots = bs.BotSet()
 
-        self._botSpawnTimer = bs.Timer(3000, bs.WeakCall(self.spawnBots))
+        bs.gameTimer(3500, bs.WeakCall(self.spawnBots), repeat=True)
 
     def handleMessage(self, m):
         if isinstance(m, bs.PlayerSpazDeathMessage):
             self.endGame()
 
     def spawnBots(self):
-        # self._bots.spawnBot(bs.PirateBot, pos=(6,7,-6))
-        # self._bots.spawnBot(bs.PirateBot, pos=(-3,10,-2))
-        # self._bots.spawnBot(bs.PirateBot, pos=(5, 6, -2))
-        # self._bots.spawnBot(bs.PirateBot, pos=(-6, 7, -6))
+        botSpawnPoints = [(5, 6, -2), (6, 10, -5.5), (-3, 10, -5.5), (-5, 6, -2)]
+        r = random.random()
+        for i in range(len(self._botSpawnTypes)):
+            if(r < self._botSpawnProbs[i]):
+                break
+
+        p1 = random.randint(0, 3)
+
+        self._bots.spawnBot(self._botSpawnTypes[i], pos=botSpawnPoints[p1])
 
     def endGame(self):
         #self._timer.stop()
