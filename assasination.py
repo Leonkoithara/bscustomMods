@@ -42,18 +42,18 @@ class testGame(bs.TeamGameActivity):
                                 bs.NinjaBot,
                                 bs.MelBot,
                                 bs.PirateBot]
-        self._botProb = [   0.25,
-                            0.05,
-                            0.05,
-                            0.25,
-                            0.05,
-                            0.05,
-                            0.05,
-                            0.1,
-                            0.02,
-                            0.02,
-                            0.1,
-                            0.01]
+        self._botProb = [   0.31,   #bomber
+                            0.11,   #bomberpro
+                            0.02,   #bomberproshield
+                            0.31,   #toughguy
+                            0.11,   #toughguypro
+                            0.02,   #toughguyproshield
+                            0.05,   #chick
+                            0.02,    #chickpro
+                            0.01,   #chickproshield
+                            0.02,   #ninja
+                            0.01,    #mel
+                            0.01]   #pirate
 
         self._botSpawnProbs = []
         psum = 0
